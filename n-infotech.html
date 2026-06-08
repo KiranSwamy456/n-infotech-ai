@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>N-Infotech — AI &amp; Machine Learning Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #0a0e27;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ── Gradient text ── */
+    .text-gradient {
+      background: linear-gradient(135deg, #2563eb 0%, #06b6d4 50%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Section badge ── */
+    .sec-badge {
+      display: inline-block;
+      background: rgba(37,99,235,0.15);
+      border: 1px solid rgba(37,99,235,0.3);
+      color: #06b6d4;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    /* ── Navbar ── */
+    #mainNav {
+      background: rgba(10,14,39,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.3s;
+    }
+    #mainNav.scrolled { background: rgba(10,14,39,0.95); }
+    #mainNav .nav-link {
+      color: rgba(255,255,255,0.8) !important;
+      font-weight: 500;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+    #mainNav .nav-link:hover { color: #06b6d4 !important; }
+    .brand-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg,#2563eb,#7c3aed);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .btn-nav {
+      background: linear-gradient(135deg,#2563eb,#7c3aed);
+      color: #fff !important;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 0 20px rgba(37,99,235,0.4);
+      border-radius: 999px;
+      padding: 8px 22px;
+    }
+
+    /* ── Grid overlay ── */
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Orb ── */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* ── Particles ── */
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      bottom: -20px;
+      pointer-events: none;
+    }
+
+    /* ── Glass card ── */
+    .glass-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+    .glass-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(37,99,235,0.15);
+      border-color: rgba(37,99,235,0.3);
+    }
+
+    /* ── Buttons ── */
+    .btn-primary-grad {
+      background: linear-gradient(135deg,#2563eb,#7c3aed);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: 0 0 30px rgba(37,99,235,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary-grad:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 45px rgba(37,99,235,0.7);
+      color: #fff;
+    }
+    .btn-outline-glass {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 999px;
+      font-weight: 600;
+      transition: border-color 0.2s, background 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-outline-glass:hover {
+      border-color: #06b6d4;
+      background: rgba(6,182,212,0.08);
+      color: #fff;
+    }
+
+    /* ── Reveal animation (JS adds .visible) ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-48px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(48px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ── CSS keyframes ── */
+    @keyframes particleRise {
+      0%   { transform: translateY(0); opacity: 0.6; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+    @keyframes orbFloat {
+      0%,100% { transform: translateY(0) scale(1); }
+      50%      { transform: translateY(-30px) scale(1.04); }
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes spinRev {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(-360deg); }
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    @keyframes scrollLeft {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes scrollRight {
+      from { transform: translateX(-50%); }
+      to   { transform: translateX(0); }
+    }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+    /* ── Testimonial ── */
+    #testimonialBody { animation: fadeIn 0.4s ease; }
+
+    /* ── Tech ticker ── */
+    .ticker-wrap { overflow: hidden; }
+    .ticker-track {
+      display: flex;
+      width: max-content;
+    }
+    .ticker-track.left  { animation: scrollLeft  30s linear infinite; }
+    .ticker-track.right { animation: scrollRight 35s linear infinite; }
+    .tech-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      margin-right: 14px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .tech-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* ── FAQ ── */
+    .faq-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .faq-item.open {
+      border-color: rgba(37,99,235,0.4);
+      background: rgba(37,99,235,0.06);
+    }
+    .faq-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 20px 24px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .faq-chevron {
+      flex-shrink: 0;
+      transition: transform 0.3s;
+      color: rgba(255,255,255,0.5);
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+      line-height: 1.8;
+      padding: 0 24px;
+    }
+    .faq-item.open .faq-answer { max-height: 400px; padding-bottom: 20px; }
+
+    /* ── Form inputs ── */
+    .dark-input {
+      background: rgba(255,255,255,0.07) !important;
+      color: #fff !important;
+      border: 1px solid rgba(255,255,255,0.12) !important;
+      border-radius: 10px !important;
+      padding: 12px 16px !important;
+    }
+    .dark-input::placeholder { color: rgba(255,255,255,0.35) !important; }
+    .dark-input:focus {
+      background: rgba(255,255,255,0.09) !important;
+      border-color: rgba(37,99,235,0.5) !important;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15) !important;
+      color: #fff !important;
+      outline: none !important;
+    }
+
+    /* ── Misc ── */
+    .about-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid;
+    }
+    .footer-link { color: rgba(255,255,255,0.4); font-size: 13px; text-decoration: none; transition: color 0.2s; }
+    .footer-link:hover { color: #06b6d4; }
+    .social-icon-btn {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.5);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .label-style { color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 500; }
+    .err-msg { color: #f87171; font-size: 12px; margin-top: 4px; }
+
+    /* ── Scroll indicator ── */
+    #scrollIndicator { animation: bounce 2s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ NAVBAR ══════════════════════════════ -->
+<nav id="mainNav" class="navbar navbar-expand-lg fixed-top py-3">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none fw-bold fs-4" href="#home">
+      <div class="brand-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <span class="text-gradient">N-Infotech</span>
+    </a>
+
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="color:#fff;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link px-3 py-2" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link px-3 py-2" href="#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link px-3 py-2" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link px-3 py-2" href="#portfolio">Portfolio</a></li>
+        <li class="nav-item"><a class="nav-link px-3 py-2" href="#pricing">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link px-3 py-2" href="#contact">Contact</a></li>
+        <li class="nav-item ms-2">
+          <a href="#contact" class="btn-nav px-4 py-2 fw-semibold" style="text-decoration:none;font-size:14px;border-radius:999px;">Get Started</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════ HERO ══════════════════════════════ -->
+<section id="home" class="position-relative overflow-hidden d-flex align-items-center"
+  style="min-height:100vh;background:linear-gradient(135deg,#0a0e27 0%,#0d1040 50%,#0a0e27 100%);padding-top:90px;">
+  <div class="grid-overlay"></div>
+
+  <!-- Orbs -->
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;">
+    <div class="orb" style="width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,0.15) 0%,transparent 70%);top:-20%;left:-10%;animation:orbFloat 8s ease-in-out infinite;"></div>
+    <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%);bottom:-15%;right:-5%;animation:orbFloat 10s ease-in-out infinite reverse;"></div>
+    <div class="orb" style="width:300px;height:300px;background:radial-gradient(circle,rgba(6,182,212,0.12) 0%,transparent 70%);top:40%;right:20%;animation:orbFloat 12s ease-in-out infinite 2s;"></div>
+  </div>
+
+  <!-- Particles container -->
+  <div id="particles" style="position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;"></div>
+
+  <div class="container position-relative" style="z-index:1;">
+    <div class="row justify-content-center text-center">
+      <div class="col-lg-10 col-xl-9">
+
+        <!-- Badge -->
+        <div class="mb-4 reveal">
+          <span class="sec-badge">Next-Generation AI Solutions</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="fw-bold mb-4 reveal" style="font-size:clamp(2.2rem,5vw,4rem);line-height:1.15;color:#fff;transition-delay:0.1s;">
+          Transform Your Business with <span class="text-gradient">AI</span> &amp; <span class="text-gradient">Machine Learning</span>
+        </h1>
+
+        <!-- Subheadline -->
+        <p class="lead mb-5 mx-auto reveal" style="color:rgba(255,255,255,0.65);max-width:680px;font-size:1.15rem;transition-delay:0.2s;">
+          N-Infotech delivers cutting-edge AI, ML, and data science solutions that turn your data into competitive advantage — faster, smarter, and at scale.
+        </p>
+
+        <!-- CTAs -->
+        <div class="d-flex justify-content-center gap-3 flex-wrap mb-5 reveal" style="transition-delay:0.3s;">
+          <a href="#contact" class="btn-primary-grad px-5 py-3 fw-semibold" style="font-size:1rem;">
+            Start Your AI Journey
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#services" class="btn-outline-glass px-5 py-3 fw-semibold" style="font-size:1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            View Our Services
+          </a>
+        </div>
+
+        <!-- Hero stats -->
+        <div class="row g-3 justify-content-center reveal" style="transition-delay:0.5s;">
+          <div class="col-6 col-md-3">
+            <div class="p-3 rounded-3" style="background:rgba(255,255,255,0.05);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);">
+              <div class="fw-bold mb-1 text-gradient" style="font-size:2rem;line-height:1;" data-countup="200" data-suffix="+">0+</div>
+              <div style="color:rgba(255,255,255,0.6);font-size:13px;">AI Projects</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="p-3 rounded-3" style="background:rgba(255,255,255,0.05);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);">
+              <div class="fw-bold mb-1 text-gradient" style="font-size:2rem;line-height:1;" data-countup="50" data-suffix="+">0+</div>
+              <div style="color:rgba(255,255,255,0.6);font-size:13px;">Enterprise Clients</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="p-3 rounded-3" style="background:rgba(255,255,255,0.05);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);">
+              <div class="fw-bold mb-1 text-gradient" style="font-size:2rem;line-height:1;" data-countup="5" data-suffix="+">0+</div>
+              <div style="color:rgba(255,255,255,0.6);font-size:13px;">Years of Innovation</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="p-3 rounded-3" style="background:rgba(255,255,255,0.05);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);">
+              <div class="fw-bold mb-1 text-gradient" style="font-size:2rem;line-height:1;" data-countup="98" data-suffix="%">0%</div>
+              <div style="color:rgba(255,255,255,0.6);font-size:13px;">Client Satisfaction</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="text-center mt-5" id="scrollIndicator">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ SERVICES ══════════════════════════════ -->
+<section id="services" class="py-5" style="background:#0a0e27;padding-top:80px;padding-bottom:80px;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="sec-badge">What We Do</span>
+      <h2 class="fw-bold mb-3" style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem);">Our <span class="text-gradient">AI &amp; ML</span> Services</h2>
+      <p style="color:rgba(255,255,255,0.55);max-width:580px;margin:0 auto;font-size:1.05rem;">End-to-end artificial intelligence services that solve real problems and create measurable business value.</p>
+    </div>
+
+    <div class="row g-4" id="servicesGrid">
+      <!-- Cards injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ ABOUT ══════════════════════════════ -->
+<section id="about" class="py-5" style="background:linear-gradient(180deg,#0a0e27 0%,#0d1040 100%);padding-top:80px;padding-bottom:80px;">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <!-- AI graphic -->
+      <div class="col-lg-5 reveal-left">
+        <div class="position-relative mx-auto" style="max-width:420px;aspect-ratio:1/1;">
+          <!-- Rings -->
+          <div class="about-ring" style="inset:0;border-color:rgba(37,99,235,0.2);animation:spin 20s linear infinite;"></div>
+          <div class="about-ring" style="inset:10%;border-color:rgba(124,58,237,0.2);animation:spinRev 15s linear infinite;"></div>
+          <div class="about-ring" style="inset:20%;border-color:rgba(6,182,212,0.2);animation:spin 10s linear infinite;"></div>
+          <!-- Center -->
+          <div style="position:absolute;inset:32%;border-radius:50%;background:linear-gradient(135deg,#2563eb,#7c3aed);display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(37,99,235,0.4);">
+            <span style="color:#fff;font-weight:800;font-size:20px;">N</span>
+          </div>
+          <!-- Orbit dots -->
+          <div id="orbitDots" style="position:absolute;inset:0;"></div>
+          <!-- Metric badges -->
+          <div class="position-absolute px-3 py-2 rounded-3" style="background:rgba(255,255,255,0.07);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.12);top:5%;left:-5%;">
+            <div style="color:#06b6d4;font-weight:700;font-size:18px;">99.2%</div>
+            <div style="color:rgba(255,255,255,0.5);font-size:11px;">Accuracy</div>
+          </div>
+          <div class="position-absolute px-3 py-2 rounded-3" style="background:rgba(255,255,255,0.07);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.12);bottom:5%;right:-5%;">
+            <div style="color:#06b6d4;font-weight:700;font-size:18px;">100+</div>
+            <div style="color:rgba(255,255,255,0.5);font-size:11px;">Models</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="col-lg-7 reveal-right">
+        <span class="sec-badge">About Us</span>
+        <h2 class="fw-bold mb-3" style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.6rem);">Why Choose <span class="text-gradient">N-Infotech</span>?</h2>
+        <p style="color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:24px;">
+          Founded by AI researchers and enterprise engineers, N-Infotech bridges the gap between cutting-edge machine learning and real-world business impact. We've helped companies across finance, healthcare, retail, and logistics build AI systems that actually work in production.
+        </p>
+        <p style="color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:32px;">
+          We don't just build models — we build complete AI ecosystems. From data strategy to deployment and ongoing monitoring, we're your long-term AI partner.
+        </p>
+        <div class="d-flex flex-column gap-3 mb-4" id="aboutValues"></div>
+        <a href="#contact" class="btn-primary-grad px-5 py-3 fw-semibold" style="font-size:1rem;margin-top:8px;">Work With Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ HOW IT WORKS ══════════════════════════════ -->
+<section class="py-5" style="background:#0a0e27;padding-top:80px;padding-bottom:80px;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="sec-badge">Our Process</span>
+      <h2 class="fw-bold mb-3" style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem);">How We <span class="text-gradient">Work</span></h2>
+      <p style="color:rgba(255,255,255,0.55);max-width:560px;margin:0 auto;">A proven 4-step engagement model that gets you from idea to production-grade AI — reliably and on schedule.</p>
+    </div>
+    <div class="row g-4 position-relative">
+      <div class="d-none d-lg-block position-absolute" style="top:80px;left:12%;right:12%;height:2px;background:linear-gradient(90deg,#2563eb,#7c3aed,#06b6d4,#2563eb);opacity:0.3;"></div>
+      <div class="col-md-6 col-lg-3 text-center reveal" style="transition-delay:0.0s;">
+        <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-4 position-relative" style="width:72px;height:72px;background:linear-gradient(135deg,#2563eb30,#2563eb10);border:2px solid #2563eb50;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span class="position-absolute fw-bold d-flex align-items-center justify-content-center" style="top:-10px;right:-10px;width:28px;height:28px;border-radius:50%;background:#2563eb;color:#fff;font-size:11px;">01</span>
+        </div>
+        <h5 class="fw-bold mb-2" style="color:#fff;">Discovery &amp; Consultation</h5>
+        <p style="color:rgba(255,255,255,0.55);font-size:14px;line-height:1.7;">We dive deep into your business challenges, data landscape, and goals. Together we define success metrics and a clear AI roadmap.</p>
+      </div>
+      <div class="col-md-6 col-lg-3 text-center reveal" style="transition-delay:0.15s;">
+        <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-4 position-relative" style="width:72px;height:72px;background:linear-gradient(135deg,#7c3aed30,#7c3aed10);border:2px solid #7c3aed50;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span class="position-absolute fw-bold d-flex align-items-center justify-content-center" style="top:-10px;right:-10px;width:28px;height:28px;border-radius:50%;background:#7c3aed;color:#fff;font-size:11px;">02</span>
+        </div>
+        <h5 class="fw-bold mb-2" style="color:#fff;">Data Analysis &amp; Strategy</h5>
+        <p style="color:rgba(255,255,255,0.55);font-size:14px;line-height:1.7;">Our data engineers audit and prepare your data, identify patterns, and select the right algorithms and architecture for your use case.</p>
+      </div>
+      <div class="col-md-6 col-lg-3 text-center reveal" style="transition-delay:0.3s;">
+        <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-4 position-relative" style="width:72px;height:72px;background:linear-gradient(135deg,#06b6d430,#06b6d410);border:2px solid #06b6d450;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+          <span class="position-absolute fw-bold d-flex align-items-center justify-content-center" style="top:-10px;right:-10px;width:28px;height:28px;border-radius:50%;background:#06b6d4;color:#fff;font-size:11px;">03</span>
+        </div>
+        <h5 class="fw-bold mb-2" style="color:#fff;">Model Development &amp; Testing</h5>
+        <p style="color:rgba(255,255,255,0.55);font-size:14px;line-height:1.7;">We build, train, and rigorously validate AI models — iterating until they meet or exceed your accuracy and performance benchmarks.</p>
+      </div>
+      <div class="col-md-6 col-lg-3 text-center reveal" style="transition-delay:0.45s;">
+        <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-4 position-relative" style="width:72px;height:72px;background:linear-gradient(135deg,#2563eb30,#2563eb10);border:2px solid #2563eb50;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+          <span class="position-absolute fw-bold d-flex align-items-center justify-content-center" style="top:-10px;right:-10px;width:28px;height:28px;border-radius:50%;background:#2563eb;color:#fff;font-size:11px;">04</span>
+        </div>
+        <h5 class="fw-bold mb-2" style="color:#fff;">Deployment &amp; Support</h5>
+        <p style="color:rgba(255,255,255,0.55);font-size:14px;line-height:1.7;">Production-grade deployment on your infrastructure, with ongoing monitoring, retraining pipelines, and continuous improvement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ STATS ══════════════════════════════ -->
+<section class="py-5 position-relative overflow-hidden" style="background:linear-gradient(135deg,#0d1040 0%,#150b3a 50%,#0d1040 100%);padding-top:80px;padding-bottom:80px;">
+  <div style="position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,0.08) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;"></div>
+  <div class="container position-relative">
+    <div class="text-center mb-5 reveal">
+      <h2 class="fw-bold mb-2" style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem);">Numbers That <span class="text-gradient">Speak</span></h2>
+      <p style="color:rgba(255,255,255,0.5);">Our track record across industries and use cases</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-6 col-lg-3 text-center reveal" style="transition-delay:0.0s;">
+        <div class="glass-card p-4 h-100">
+          <div class="d-inline-flex align-items-center justify-content-center rounded-3 mb-3" style="width:48px;height:48px;background:rgba(37,99,235,0.2);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <div class="fw-bold mb-1 text-gradient" style="font-size:2.5rem;line-height:1;" data-countup="200" data-suffix="+">0+</div>
+          <div class="fw-semibold mb-1" style="color:#fff;font-size:15px;">AI Projects Delivered</div>
+          <div style="color:rgba(255,255,255,0.45);font-size:13px;">Across 12 industries</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3 text-center reveal" style="transition-delay:0.1s;">
+        <div class="glass-card p-4 h-100">
+          <div class="d-inline-flex align-items-center justify-content-center rounded-3 mb-3" style="width:48px;height:48px;background:rgba(37,99,235,0.2);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="fw-bold mb-1 text-gradient" style="font-size:2.5rem;line-height:1;" data-countup="50" data-suffix="+">0+</div>
+          <div class="fw-semibold mb-1" style="color:#fff;font-size:15px;">Enterprise Clients</div>
+          <div style="color:rgba(255,255,255,0.45);font-size:13px;">From startups to Fortune 500</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3 text-center reveal" style="transition-delay:0.2s;">
+        <div class="glass-card p-4 h-100">
+          <div class="d-inline-flex align-items-center justify-content-center rounded-3 mb-3" style="width:48px;height:48px;background:rgba(37,99,235,0.2);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="fw-bold mb-1 text-gradient" style="font-size:2.5rem;line-height:1;" data-countup="98" data-suffix="%">0%</div>
+          <div class="fw-semibold mb-1" style="color:#fff;font-size:15px;">Client Satisfaction</div>
+          <div style="color:rgba(255,255,255,0.45);font-size:13px;">Based on post-delivery surveys</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3 text-center reveal" style="transition-delay:0.3s;">
+        <div class="glass-card p-4 h-100">
+          <div class="d-inline-flex align-items-center justify-content-center rounded-3 mb-3" style="width:48px;height:48px;background:rgba(37,99,235,0.2);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <div class="fw-bold mb-1 text-gradient" style="font-size:2.5rem;line-height:1;" data-countup="5" data-suffix="+">0+</div>
+          <div class="fw-semibold mb-1" style="color:#fff;font-size:15px;">Years of Innovation</div>
+          <div style="color:rgba(255,255,255,0.45);font-size:13px;">Leading AI since 2019</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ TECHNOLOGIES ══════════════════════════════ -->
+<section class="py-5" style="background:#0a0e27;padding-top:70px;padding-bottom:70px;overflow:hidden;">
+  <div class="container mb-5">
+    <div class="text-center reveal">
+      <span class="sec-badge">Tech Stack</span>
+      <h2 class="fw-bold mb-3" style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem);">Powered by <span class="text-gradient">Industry-Leading</span> Tools</h2>
+      <p style="color:rgba(255,255,255,0.5);max-width:520px;margin:0 auto;">We use the most advanced and battle-tested AI frameworks and cloud platforms to build your solutions.</p>
+    </div>
+  </div>
+  <div class="ticker-wrap mb-3"><div class="ticker-track left" id="ticker1"></div></div>
+  <div class="ticker-wrap"><div class="ticker-track right" id="ticker2"></div></div>
+</section>
+
+<!-- ══════════════════════════════ PORTFOLIO ══════════════════════════════ -->
+<section id="portfolio" class="py-5" style="background:linear-gradient(180deg,#0a0e27 0%,#0d1040 100%);padding-top:80px;padding-bottom:80px;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="sec-badge">Case Studies</span>
+      <h2 class="fw-bold mb-3" style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem);">Real Problems, <span class="text-gradient">Real Results</span></h2>
+      <p style="color:rgba(255,255,255,0.55);max-width:560px;margin:0 auto;">A sample of high-impact AI projects we've delivered across industries.</p>
+    </div>
+    <div class="row g-4" id="portfolioGrid"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ TESTIMONIALS ══════════════════════════════ -->
+<section class="py-5" style="background:#0a0e27;padding-top:80px;padding-bottom:80px;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="sec-badge">Client Stories</span>
+      <h2 class="fw-bold mb-3" style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem);">What Our <span class="text-gradient">Clients Say</span></h2>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="p-4 p-md-5 rounded-4 position-relative text-center" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);min-height:300px;">
+          <div class="d-inline-flex align-items-center justify-content-center rounded-3 mb-4" id="testimonialIcon" style="width:52px;height:52px;background:rgba(37,99,235,0.2);border:1px solid rgba(37,99,235,0.3);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          </div>
+          <div id="testimonialBody">
+            <p class="mb-4" style="color:rgba(255,255,255,0.8);font-size:1.1rem;line-height:1.8;font-style:italic;" id="testimonialQuote"></p>
+            <div class="d-flex align-items-center justify-content-center gap-3">
+              <div class="d-flex align-items-center justify-content-center rounded-circle fw-bold flex-shrink-0" id="testimonialAvatar" style="width:52px;height:52px;font-size:16px;color:#fff;"></div>
+              <div class="text-start">
+                <div class="fw-bold" id="testimonialName" style="color:#fff;font-size:15px;"></div>
+                <div id="testimonialRole" style="color:rgba(255,255,255,0.5);font-size:13px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Controls -->
+        <div class="d-flex align-items-center justify-content-center gap-4 mt-4">
+          <button id="testPrev" class="btn rounded-circle border-0 d-flex align-items-center justify-content-center" style="width:44px;height:44px;background:rgba(255,255,255,0.07);color:#fff;transition:background 0.2s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="d-flex gap-2" id="testDots"></div>
+          <button id="testNext" class="btn rounded-circle border-0 d-flex align-items-center justify-content-center" style="width:44px;height:44px;background:rgba(255,255,255,0.07);color:#fff;transition:background 0.2s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ PRICING ══════════════════════════════ -->
+<section id="pricing" class="py-5" style="background:linear-gradient(180deg,#0d1040 0%,#0a0e27 100%);padding-top:80px;padding-bottom:80px;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="sec-badge">Pricing</span>
+      <h2 class="fw-bold mb-3" style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem);">Transparent <span class="text-gradient">Pricing</span></h2>
+      <p style="color:rgba(255,255,255,0.55);max-width:520px;margin:0 auto;">Choose the plan that matches your ambition. All plans include onboarding and a dedicated point of contact.</p>
+    </div>
+    <div class="row g-4 justify-content-center align-items-stretch" id="pricingGrid"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ TEAM ══════════════════════════════ -->
+<section class="py-5" style="background:#0a0e27;padding-top:80px;padding-bottom:80px;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="sec-badge">The Team</span>
+      <h2 class="fw-bold mb-3" style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem);">Meet the <span class="text-gradient">Experts</span></h2>
+      <p style="color:rgba(255,255,255,0.55);max-width:520px;margin:0 auto;">A team of researchers, engineers, and strategists united by one goal — delivering AI that works.</p>
+    </div>
+    <div class="row g-4 justify-content-center" id="teamGrid"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ FAQ ══════════════════════════════ -->
+<section class="py-5" style="background:linear-gradient(180deg,#0a0e27 0%,#0d1040 100%);padding-top:80px;padding-bottom:80px;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="sec-badge">FAQ</span>
+      <h2 class="fw-bold mb-3" style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem);">Frequently Asked <span class="text-gradient">Questions</span></h2>
+      <p style="color:rgba(255,255,255,0.55);max-width:520px;margin:0 auto;">Everything you need to know before starting your AI journey with us.</p>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8" id="faqList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ CTA BANNER ══════════════════════════════ -->
+<section class="py-5 position-relative overflow-hidden" style="padding-top:80px;padding-bottom:80px;">
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1e3a8a 0%,#4c1d95 50%,#164e63 100%);"></div>
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);background-size:40px 40px;"></div>
+  <div style="position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,0.3) 0%,transparent 70%);top:-30%;left:-5%;pointer-events:none;"></div>
+  <div style="position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.3) 0%,transparent 70%);bottom:-20%;right:5%;pointer-events:none;"></div>
+  <div class="container position-relative">
+    <div class="text-center reveal">
+      <span class="badge rounded-pill px-4 py-2 mb-4 d-inline-flex align-items-center gap-2" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:13px;font-weight:600;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+        Start Today
+      </span>
+      <h2 class="fw-bold mb-3" style="color:#fff;font-size:clamp(2rem,4vw,3.2rem);line-height:1.2;">
+        Ready to Transform Your Business<br>with <span style="color:#06b6d4;">Artificial Intelligence</span>?
+      </h2>
+      <p class="mb-5 mx-auto" style="color:rgba(255,255,255,0.7);font-size:1.1rem;max-width:580px;">
+        Join 50+ companies that chose N-Infotech to build AI systems that actually work. Book a free 30-minute strategy call and walk away with a clear AI roadmap — no strings attached.
+      </p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="#contact" class="btn btn-lg rounded-pill px-5 py-3 fw-semibold d-inline-flex align-items-center gap-2" style="background:#fff;color:#1e3a8a;border:none;box-shadow:0 0 30px rgba(255,255,255,0.3);">
+          Book Free Consultation
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#portfolio" class="btn-outline-glass btn btn-lg rounded-pill px-5 py-3 fw-semibold">View Case Studies</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ CONTACT ══════════════════════════════ -->
+<section id="contact" class="py-5" style="background:#0a0e27;padding-top:80px;padding-bottom:80px;">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="sec-badge">Get In Touch</span>
+      <h2 class="fw-bold mb-3" style="color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem);">Let's Build Something <span class="text-gradient">Extraordinary</span></h2>
+      <p style="color:rgba(255,255,255,0.55);max-width:520px;margin:0 auto;">Tell us about your challenge. We'll respond within one business day with a clear path forward.</p>
+    </div>
+    <div class="row g-5">
+      <!-- Left -->
+      <div class="col-lg-4 reveal-left">
+        <div class="d-flex flex-column gap-4 mb-5">
+          <a href="mailto:info@n-infotech.com" class="d-flex align-items-start gap-3 text-decoration-none">
+            <div class="d-flex align-items-center justify-content-center rounded-3 flex-shrink-0" style="width:44px;height:44px;background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.3);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </div>
+            <div>
+              <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-bottom:2px;">Email</div>
+              <div style="color:#fff;font-size:14px;font-weight:500;">info@n-infotech.com</div>
+            </div>
+          </a>
+          <a href="tel:+15559012345" class="d-flex align-items-start gap-3 text-decoration-none">
+            <div class="d-flex align-items-center justify-content-center rounded-3 flex-shrink-0" style="width:44px;height:44px;background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.3);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.28 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-bottom:2px;">Phone</div>
+              <div style="color:#fff;font-size:14px;font-weight:500;">+1 (555) 901-2345</div>
+            </div>
+          </a>
+          <div class="d-flex align-items-start gap-3">
+            <div class="d-flex align-items-center justify-content-center rounded-3 flex-shrink-0" style="width:44px;height:44px;background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.3);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-bottom:2px;">Address</div>
+              <div style="color:#fff;font-size:14px;font-weight:500;">Tech Park, Suite 400, San Francisco, CA 94105</div>
+            </div>
+          </div>
+        </div>
+        <!-- Map placeholder -->
+        <div class="rounded-3 mb-4 d-flex align-items-center justify-content-center" style="height:140px;background:linear-gradient(135deg,rgba(37,99,235,0.1),rgba(124,58,237,0.1));border:1px solid rgba(255,255,255,0.08);">
+          <div class="text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:8px;">San Francisco, CA</div>
+          </div>
+        </div>
+        <!-- Socials -->
+        <div class="d-flex gap-3">
+          <a href="#" class="social-icon-btn" style="--hc:#0077B5;" onmouseover="this.style.color='#0077B5';this.style.borderColor='#0077B5aa';this.style.background='#0077B518';" onmouseout="this.style.color='rgba(255,255,255,0.5)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.background='rgba(255,255,255,0.06)';">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="#" class="social-icon-btn" onmouseover="this.style.color='#1DA1F2';this.style.borderColor='#1DA1F2aa';this.style.background='#1DA1F218';" onmouseout="this.style.color='rgba(255,255,255,0.5)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.background='rgba(255,255,255,0.06)';">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" class="social-icon-btn" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.5)';this.style.background='rgba(255,255,255,0.12)';" onmouseout="this.style.color='rgba(255,255,255,0.5)';this.style.borderColor='rgba(255,255,255,0.1)';this.style.background='rgba(255,255,255,0.06)';">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="col-lg-8 reveal-right">
+        <div class="p-4 p-md-5 rounded-4" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);">
+          <div id="formSuccess" class="text-center py-5" style="display:none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="mb-3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+            <h5 class="fw-bold mb-2" style="color:#fff;">Message Sent!</h5>
+            <p style="color:rgba(255,255,255,0.5);">We'll get back to you within one business day.</p>
+          </div>
+          <form id="contactForm" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="label-style form-label">Full Name</label>
+                <input id="fName" type="text" class="form-control dark-input" placeholder="John Smith" />
+                <div class="err-msg" id="errName"></div>
+              </div>
+              <div class="col-md-6">
+                <label class="label-style form-label">Email Address</label>
+                <input id="fEmail" type="email" class="form-control dark-input" placeholder="you@company.com" />
+                <div class="err-msg" id="errEmail"></div>
+              </div>
+              <div class="col-12">
+                <label class="label-style form-label">Subject</label>
+                <input id="fSubject" type="text" class="form-control dark-input" placeholder="e.g. Machine Learning for demand forecasting" />
+                <div class="err-msg" id="errSubject"></div>
+              </div>
+              <div class="col-12">
+                <label class="label-style form-label">Message</label>
+                <textarea id="fMessage" rows="5" class="form-control dark-input" placeholder="Tell us about your project, data, and goals..." style="resize:none;"></textarea>
+                <div class="err-msg" id="errMessage"></div>
+              </div>
+              <div class="col-12">
+                <button type="submit" id="submitBtn" class="btn-primary-grad px-5 py-3 fw-semibold border-0" style="font-size:1rem;cursor:pointer;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                  Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
+<footer style="background:#060912;border-top:1px solid rgba(255,255,255,0.07);padding-top:60px;padding-bottom:32px;">
+  <div class="container">
+    <div class="row g-5 mb-5">
+      <!-- Brand -->
+      <div class="col-lg-4">
+        <a class="d-flex align-items-center gap-2 fw-bold fs-4 mb-3 text-decoration-none" href="#home">
+          <div class="brand-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <span class="text-gradient">N-Infotech</span>
+        </a>
+        <p style="color:rgba(255,255,255,0.45);font-size:14px;line-height:1.8;margin-bottom:24px;">Building the AI-powered future — one enterprise at a time. From model to production, we're your long-term AI partner.</p>
+        <p style="color:rgba(255,255,255,0.6);font-size:13px;font-weight:600;margin-bottom:10px;">AI Insights Newsletter</p>
+        <div id="newsletterSuccess" style="color:#06b6d4;font-size:13px;display:none;">You're in! Check your inbox.</div>
+        <form id="newsletterForm" class="d-flex gap-2">
+          <input type="email" id="newsletterEmail" placeholder="your@email.com" class="form-control rounded-pill border-0" style="background:rgba(255,255,255,0.07);color:#fff;font-size:13px;padding:8px 16px;outline:1px solid rgba(255,255,255,0.1);" />
+          <button type="submit" class="btn rounded-pill d-flex align-items-center justify-content-center flex-shrink-0" style="background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border:none;width:40px;height:40px;padding:0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Services links -->
+      <div class="col-6 col-lg-2">
+        <h6 class="fw-bold mb-3" style="color:#fff;font-size:14px;">Services</h6>
+        <ul class="list-unstyled d-flex flex-column gap-2">
+          <li><a href="#" class="footer-link">Machine Learning</a></li>
+          <li><a href="#" class="footer-link">NLP Solutions</a></li>
+          <li><a href="#" class="footer-link">Computer Vision</a></li>
+          <li><a href="#" class="footer-link">Predictive Analytics</a></li>
+          <li><a href="#" class="footer-link">AI Automation</a></li>
+          <li><a href="#" class="footer-link">Data Engineering</a></li>
+        </ul>
+      </div>
+
+      <!-- Company links -->
+      <div class="col-6 col-lg-2">
+        <h6 class="fw-bold mb-3" style="color:#fff;font-size:14px;">Company</h6>
+        <ul class="list-unstyled d-flex flex-column gap-2">
+          <li><a href="#" class="footer-link">About Us</a></li>
+          <li><a href="#" class="footer-link">Our Team</a></li>
+          <li><a href="#" class="footer-link">Case Studies</a></li>
+          <li><a href="#" class="footer-link">Careers</a></li>
+          <li><a href="#" class="footer-link">Blog</a></li>
+          <li><a href="#" class="footer-link">Press</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources links -->
+      <div class="col-6 col-lg-2">
+        <h6 class="fw-bold mb-3" style="color:#fff;font-size:14px;">Resources</h6>
+        <ul class="list-unstyled d-flex flex-column gap-2">
+          <li><a href="#" class="footer-link">Documentation</a></li>
+          <li><a href="#" class="footer-link">AI Glossary</a></li>
+          <li><a href="#" class="footer-link">White Papers</a></li>
+          <li><a href="#" class="footer-link">Research</a></li>
+          <li><a href="#" class="footer-link">API Reference</a></li>
+          <li><a href="#" class="footer-link">Support</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 pt-4" style="border-top:1px solid rgba(255,255,255,0.07);">
+      <p style="color:rgba(255,255,255,0.35);font-size:13px;margin:0;">&copy; 2025 N-Infotech. All rights reserved.</p>
+      <div class="d-flex gap-3">
+        <a href="#" class="social-icon-btn" onmouseover="this.style.color='#0077B5';" onmouseout="this.style.color='rgba(255,255,255,0.35)';" style="background:transparent;border:none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="#" class="social-icon-btn" onmouseover="this.style.color='#1DA1F2';" onmouseout="this.style.color='rgba(255,255,255,0.35)';" style="background:transparent;border:none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" class="social-icon-btn" onmouseover="this.style.color='#fff';" onmouseout="this.style.color='rgba(255,255,255,0.35)';" style="background:transparent;border:none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        </a>
+      </div>
+      <div class="d-flex gap-3">
+        <a href="#" class="footer-link" style="font-size:12px;">Privacy Policy</a>
+        <a href="#" class="footer-link" style="font-size:12px;">Terms of Service</a>
+        <a href="#" class="footer-link" style="font-size:12px;">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── DATA ──────────────────────────────────────────────────────
+const SERVICES = [
+  { svg: '<path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>', title: "Machine Learning", desc: "Custom ML models that learn from your data to automate decisions, predict outcomes, and surface patterns at scale.", color: "#2563eb" },
+  { svg: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>', title: "Natural Language Processing", desc: "Transform unstructured text into intelligence — sentiment analysis, entity extraction, document classification, and more.", color: "#7c3aed" },
+  { svg: '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>', title: "Computer Vision", desc: "Enable machines to see and interpret visual data — object detection, quality inspection, and image classification.", color: "#06b6d4" },
+  { svg: '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>', title: "Predictive Analytics", desc: "Leverage historical data to forecast demand, churn, revenue, and risk with high-accuracy predictive models.", color: "#2563eb" },
+  { svg: '<rect width="18" height="10" x="3" y="11" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/>', title: "AI Automation", desc: "End-to-end intelligent workflow automation that eliminates manual bottlenecks and drives operational efficiency.", color: "#7c3aed" },
+  { svg: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/>', title: "Data Engineering", desc: "Robust data pipelines, warehouses, and lakes that make your data AI-ready, reliable, and fast to access.", color: "#06b6d4" },
+  { svg: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>', title: "Deep Learning", desc: "Neural network architectures for complex problems — from recommendation engines to time-series forecasting.", color: "#2563eb" },
+  { svg: '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>', title: "Cloud AI Solutions", desc: "Scalable AI infrastructure on AWS, Azure, and GCP — from model deployment to MLOps pipelines and monitoring.", color: "#7c3aed" },
+];
+
+const TECHS = [
+  { name:"TensorFlow", color:"#FF6F00" }, { name:"PyTorch", color:"#EE4C2C" }, { name:"OpenAI", color:"#10a37f" },
+  { name:"AWS SageMaker", color:"#FF9900" }, { name:"Azure ML", color:"#0078D4" }, { name:"Google Cloud AI", color:"#4285F4" },
+  { name:"Scikit-learn", color:"#F7931E" }, { name:"Keras", color:"#D00000" }, { name:"Docker", color:"#2496ED" },
+  { name:"Kubernetes", color:"#326CE5" }, { name:"Python", color:"#3776AB" }, { name:"Apache Spark", color:"#E25A1C" },
+  { name:"Hugging Face", color:"#FFD21E" }, { name:"LangChain", color:"#1C8C8C" }, { name:"MLflow", color:"#0194E2" },
+  { name:"Databricks", color:"#FF3621" },
+];
+
+const PORTFOLIO = [
+  { cat:"Predictive Analytics", title:"Retail Demand Forecasting Engine", client:"Global Retail Chain", desc:"Built an ML pipeline ingesting 3 years of sales, weather, and event data to forecast product demand at SKU level across 200+ stores — with 94% accuracy.", metric:"40%", metricLabel:"reduction in inventory costs", tags:["XGBoost","Python","AWS","Apache Spark"], color:"#2563eb" },
+  { cat:"Natural Language Processing", title:"Intelligent Banking Chatbot", client:"Regional Bank", desc:"Designed and deployed a transformer-based NLP chatbot handling account queries, fraud alerts, and loan pre-qualification — integrated with core banking systems.", metric:"60%", metricLabel:"reduction in support tickets", tags:["LLM","LangChain","Azure","NLP"], color:"#7c3aed" },
+  { cat:"Computer Vision", title:"Manufacturing Quality Control", client:"Automotive Manufacturer", desc:"Deployed real-time computer vision system on the assembly line that detects surface defects, dimensional anomalies, and assembly errors faster than human inspectors.", metric:"99.2%", metricLabel:"defect detection accuracy", tags:["YOLOv8","OpenCV","Edge AI","PyTorch"], color:"#06b6d4" },
+];
+
+const TESTIMONIALS = [
+  { quote:"N-Infotech didn't just build us a model — they transformed how we think about our data. The demand forecasting system paid for itself in three months and continues to save us millions annually.", name:"Sarah Chen", role:"VP of Operations, RetailFirst Group", initials:"SC", color:"#2563eb" },
+  { quote:"Their NLP chatbot reduced our call center load by 60% and improved customer satisfaction scores. The team was technically excellent and communicated clearly throughout the entire project.", name:"Marcus Williams", role:"Chief Digital Officer, Atlantic Financial", initials:"MW", color:"#7c3aed" },
+  { quote:"The computer vision quality control system N-Infotech deployed on our production line achieves 99.2% accuracy and runs 24/7. It's become a core part of our competitive advantage.", name:"Elena Petrov", role:"Head of Manufacturing Innovation, ProAuto Industries", initials:"EP", color:"#06b6d4" },
+  { quote:"Working with N-Infotech on our predictive analytics platform was a game-changer. They understood our domain deeply and built something our team actually uses and trusts every day.", name:"James Okafor", role:"Data Strategy Lead, Nexus Healthcare", initials:"JO", color:"#2563eb" },
+];
+
+const PRICING = [
+  { name:"Starter", price:"$2,499", period:"/month", desc:"For small businesses taking their first steps with AI.", features:["1 AI/ML model development","Up to 50K data records","Basic data pipeline setup","Model training & validation","Monthly performance report","Email support (48h response)"], cta:"Get Started", featured:false, color:"#2563eb" },
+  { name:"Professional", price:"$7,999", period:"/month", desc:"For growing companies ready to scale AI across workflows.", features:["Up to 5 AI/ML models","Unlimited data volume","Advanced data engineering","MLOps & model monitoring","Custom dashboard & reporting","A/B testing & model versioning","Dedicated AI engineer","Priority support (4h response)"], cta:"Most Popular", featured:true, color:"#7c3aed" },
+  { name:"Enterprise", price:"Custom", period:"", desc:"For large organizations requiring full AI transformation.", features:["Unlimited AI/ML models","Full data lake & warehouse","Real-time inference at scale","Multi-cloud AI infrastructure","Custom model architectures","On-site team embedding","24/7 dedicated support","SLA guarantees"], cta:"Contact Sales", featured:false, color:"#06b6d4" },
+];
+
+const TEAM = [
+  { name:"Nikhil Sharma", role:"CEO & Founder", bio:"15 years in AI research and enterprise software. Former ML Lead at Google Brain.", initials:"NS", gradient:"linear-gradient(135deg,#2563eb,#7c3aed)" },
+  { name:"Priya Mehta", role:"Chief Technology Officer", bio:"Deep learning specialist with 10+ published papers. PhD from IIT Bombay.", initials:"PM", gradient:"linear-gradient(135deg,#7c3aed,#06b6d4)" },
+  { name:"Arun Verma", role:"Lead Data Scientist", bio:"Ex-Amazon Science. Expert in NLP, recommendation systems, and MLOps at scale.", initials:"AV", gradient:"linear-gradient(135deg,#06b6d4,#2563eb)" },
+  { name:"Sara Ahmed", role:"Senior AI Engineer", bio:"Computer vision and edge AI specialist. Deployed CV systems in 20+ factories.", initials:"SA", gradient:"linear-gradient(135deg,#2563eb,#06b6d4)" },
+];
+
+const FAQS = [
+  { q:"How long does a typical AI project take?", a:"Most projects run 8–16 weeks from kickoff to production deployment. A focused MVP can ship in 4–6 weeks. Timeline depends on data availability, model complexity, and integration requirements. We'll give you a detailed timeline after the discovery phase." },
+  { q:"Do we need to have clean, structured data before starting?", a:"Not necessarily. Data engineering is a core part of our service. We can work with raw, messy, or partially structured data. Our data engineers will audit your existing data, identify gaps, and build pipelines to make it AI-ready. The better your data, the faster we move — but we handle the heavy lifting either way." },
+  { q:"How do you ensure our data is kept secure and private?", a:"Security is non-negotiable. We operate under strict NDAs, use encrypted data transit and storage, and can work entirely within your cloud environment so your data never leaves your infrastructure. We follow SOC 2 practices and are GDPR-compliant by design." },
+  { q:"What happens after the model is deployed?", a:"We don't disappear after launch. All plans include a post-deployment monitoring period. We set up automated alerts for model drift, performance degradation, and data quality issues. For ongoing clients, we provide retraining pipelines and quarterly model reviews." },
+  { q:"Can you work with our existing tech stack and cloud provider?", a:"Yes — we're cloud-agnostic and stack-flexible. We work with AWS, Azure, GCP, and on-premise environments. We can integrate with your existing databases, APIs, BI tools, and internal systems. We adapt to your environment, not the other way around." },
+  { q:"What industries do you specialize in?", a:"We've delivered AI projects across finance, healthcare, retail, manufacturing, logistics, and media. Our approach is domain-adaptive — we combine deep AI expertise with industry-specific knowledge to build solutions that fit your business context, not just your data schema." },
+];
+
+const ABOUT_VALUES = [
+  "Mission-driven AI built around your specific business outcomes — not off-the-shelf solutions.",
+  "Research-backed innovation using the latest models and techniques from academia and industry.",
+  "Enterprise-grade security, compliance, and data governance baked into every project.",
+  "Collaborative approach — your team learns and grows alongside every AI system we build.",
+];
+
+// ── PARTICLES ──
+(function spawnParticles() {
+  const cont = document.getElementById('particles');
+  const colors = ['#06b6d4','#2563eb','#7c3aed'];
+  for (let i = 0; i < 40; i++) {
+    const el = document.createElement('div');
+    const size = Math.random()*8+3;
+    el.className = 'particle';
+    el.style.cssText = `width:${size}px;height:${size}px;background:${colors[i%3]};left:${Math.random()*100}%;opacity:${Math.random()*0.5+0.2};animation:particleRise ${Math.random()*10+12}s ${Math.random()*15}s infinite linear;`;
+    cont.appendChild(el);
+  }
+})();
+
+// ── ORBIT DOTS ──
+(function spawnOrbitDots() {
+  const wrap = document.getElementById('orbitDots');
+  [0,60,120,180,240,300].forEach((deg,i) => {
+    const el = document.createElement('div');
+    el.style.cssText = `position:absolute;width:12px;height:12px;border-radius:50%;background:${i%2===0?'#2563eb':'#06b6d4'};top:50%;left:50%;transform:rotate(${deg}deg) translateX(140px) translateY(-50%);box-shadow:0 0 10px ${i%2===0?'#2563eb':'#06b6d4'};`;
+    wrap.appendChild(el);
+  });
+})();
+
+// ── NAVBAR SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ── RENDER SERVICES ──
+const grid = document.getElementById('servicesGrid');
+SERVICES.forEach((s, i) => {
+  grid.innerHTML += `
+  <div class="col-md-6 col-lg-3 reveal" style="transition-delay:${i*0.07}s;">
+    <div class="h-100 p-4 rounded-4 position-relative overflow-hidden" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);cursor:pointer;transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;"
+      onmouseover="this.style.transform='translateY(-8px)';this.style.boxShadow='0 20px 40px ${s.color}30';this.style.borderColor='${s.color}60';"
+      onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none';this.style.borderColor='rgba(255,255,255,0.08)';">
+      <div style="position:absolute;top:0;left:0;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,${s.color}18 0%,transparent 70%);pointer-events:none;"></div>
+      <div class="d-flex align-items-center justify-content-center rounded-3 mb-4" style="width:52px;height:52px;background:${s.color}20;border:1px solid ${s.color}40;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="${s.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">${s.svg}</svg>
+      </div>
+      <h5 class="fw-bold mb-2" style="color:#fff;font-size:16px;">${s.title}</h5>
+      <p style="color:rgba(255,255,255,0.55);font-size:14px;line-height:1.6;margin-bottom:16px;">${s.desc}</p>
+      <a href="#contact" style="color:${s.color};font-size:14px;font-weight:600;text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Learn More →</a>
+    </div>
+  </div>`;
+});
+
+// ── RENDER ABOUT VALUES ──
+const valWrap = document.getElementById('aboutValues');
+const valIcons = ['<circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/>','<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>','<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>','<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'];
+ABOUT_VALUES.forEach((v,i) => {
+  valWrap.innerHTML += `
+  <div class="d-flex align-items-start gap-3">
+    <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-2" style="width:40px;height:40px;background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.3);">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">${valIcons[i]}</svg>
+    </div>
+    <p style="color:rgba(255,255,255,0.65);margin:0;line-height:1.6;">${v}</p>
+  </div>`;
+});
+
+// ── RENDER TECH TICKERS ──
+function techBadge(t) {
+  return `<div class="tech-badge" style="border:1px solid ${t.color}30;"><span class="tech-dot" style="background:${t.color};box-shadow:0 0 8px ${t.color};"></span><span style="color:rgba(255,255,255,0.75);font-size:14px;font-weight:500;">${t.name}</span></div>`;
+}
+const t1 = [...TECHS,...TECHS].map(techBadge).join('');
+const t2 = [...TECHS.slice(8),...TECHS,...TECHS.slice(0,8)].map(techBadge).join('');
+document.getElementById('ticker1').innerHTML = t1;
+document.getElementById('ticker2').innerHTML = t2;
+
+// ── RENDER PORTFOLIO ──
+const pgrid = document.getElementById('portfolioGrid');
+const portSvgs = ['<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>','<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>','<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>'];
+PORTFOLIO.forEach((p,i) => {
+  pgrid.innerHTML += `
+  <div class="col-lg-4 reveal" style="transition-delay:${i*0.12}s;">
+    <div class="h-100 rounded-4 overflow-hidden" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;"
+      onmouseover="this.style.transform='translateY(-8px)';this.style.boxShadow='0 20px 50px ${p.color}25';this.style.borderColor='${p.color}40';"
+      onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none';this.style.borderColor='rgba(255,255,255,0.08)';">
+      <div style="height:4px;background:linear-gradient(90deg,${p.color},${p.color}80);"></div>
+      <div class="p-4">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <div class="d-flex align-items-center justify-content-center rounded-2" style="width:32px;height:32px;background:${p.color}20;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="${p.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">${portSvgs[i]}</svg>
+          </div>
+          <span style="color:${p.color};font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">${p.cat}</span>
+        </div>
+        <h5 class="fw-bold mb-1" style="color:#fff;font-size:17px;">${p.title}</h5>
+        <p style="color:rgba(255,255,255,0.4);font-size:12px;margin-bottom:12px;">Client: ${p.client}</p>
+        <p style="color:rgba(255,255,255,0.6);font-size:14px;line-height:1.7;margin-bottom:20px;">${p.desc}</p>
+        <div class="rounded-3 p-3 mb-4" style="background:${p.color}12;border:1px solid ${p.color}25;">
+          <span class="fw-bold" style="color:${p.color};font-size:1.8rem;">${p.metric}</span>
+          <span style="color:rgba(255,255,255,0.6);font-size:13px;margin-left:8px;">${p.metricLabel}</span>
+        </div>
+        <div class="d-flex flex-wrap gap-2 mb-4">${p.tags.map(t=>`<span class="badge rounded-pill px-3 py-1" style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6);font-size:11px;font-weight:500;">${t}</span>`).join('')}</div>
+        <a href="#contact" style="color:${p.color};font-size:14px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:4px;" onmouseover="this.style.gap='8px'" onmouseout="this.style.gap='4px'">View Case Study <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+      </div>
+    </div>
+  </div>`;
+});
+
+// ── TESTIMONIALS ──
+let testIdx = 0;
+function renderTestimonial() {
+  const t = TESTIMONIALS[testIdx];
+  document.getElementById('testimonialQuote').textContent = `"${t.quote}"`;
+  document.getElementById('testimonialName').textContent = t.name;
+  document.getElementById('testimonialRole').textContent = t.role;
+  document.getElementById('testimonialAvatar').textContent = t.initials;
+  document.getElementById('testimonialAvatar').style.background = `linear-gradient(135deg,${t.color},${t.color}80)`;
+  document.getElementById('testimonialIcon').style.background = `${t.color}20`;
+  document.getElementById('testimonialIcon').style.border = `1px solid ${t.color}30`;
+  document.querySelector('#testimonialIcon svg').style.stroke = t.color;
+  // dots
+  const dots = document.getElementById('testDots');
+  dots.innerHTML = TESTIMONIALS.map((_,i)=>`<button onclick="goTest(${i})" style="border:none;border-radius:999px;height:8px;width:${i===testIdx?24:8}px;background:${i===testIdx?'#2563eb':'rgba(255,255,255,0.2)'};transition:all 0.3s;cursor:pointer;padding:0;"></button>`).join('');
+  document.getElementById('testimonialBody').style.animation = 'none';
+  requestAnimationFrame(() => { document.getElementById('testimonialBody').style.animation = 'fadeIn 0.4s ease'; });
+}
+function goTest(i) { testIdx = i; renderTestimonial(); }
+document.getElementById('testPrev').onclick = () => { testIdx = (testIdx-1+TESTIMONIALS.length)%TESTIMONIALS.length; renderTestimonial(); };
+document.getElementById('testNext').onclick = () => { testIdx = (testIdx+1)%TESTIMONIALS.length; renderTestimonial(); };
+renderTestimonial();
+
+// ── RENDER PRICING ──
+const pgridEl = document.getElementById('pricingGrid');
+PRICING.forEach((p,i) => {
+  pgridEl.innerHTML += `
+  <div class="col-md-6 col-lg-4 reveal" style="transition-delay:${i*0.1}s;">
+    <div class="h-100 rounded-4 p-4 position-relative" style="background:${p.featured?'linear-gradient(135deg,rgba(124,58,237,0.2),rgba(37,99,235,0.15))':'rgba(255,255,255,0.03)'};border:${p.featured?'1px solid rgba(124,58,237,0.5)':'1px solid rgba(255,255,255,0.08)'};transition:transform 0.3s,box-shadow 0.3s;"
+      onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 20px 40px ${p.color}20';"
+      onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none';">
+      ${p.featured?`<div class="position-absolute top-0 start-50 translate-middle badge rounded-pill px-3 py-2 d-flex align-items-center gap-1" style="background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:12px;font-weight:600;white-space:nowrap;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Most Popular</div>`:''}
+      <div class="mb-3 pt-3">
+        <h5 class="fw-bold mb-1" style="color:${p.color};">${p.name}</h5>
+        <p style="color:rgba(255,255,255,0.5);font-size:13px;margin:0;">${p.desc}</p>
+      </div>
+      <div class="mb-4">
+        <span class="fw-bold" style="font-size:2.5rem;color:#fff;">${p.price}</span>
+        <span style="color:rgba(255,255,255,0.4);font-size:14px;">${p.period}</span>
+      </div>
+      <div class="d-flex flex-column gap-2 mb-4">
+        ${p.features.map(f=>`<div class="d-flex align-items-start gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="${p.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg><span style="color:rgba(255,255,255,0.7);font-size:14px;">${f}</span></div>`).join('')}
+      </div>
+      <a href="#contact" class="btn w-100 rounded-pill py-2 fw-semibold" style="${p.featured?'background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border:none;box-shadow:0 0 20px rgba(124,58,237,0.4);':`background:transparent;color:${p.color};border:1px solid ${p.color}50;`}"
+        onmouseover="${p.featured?'':'this.style.background=\''+p.color+'15\''}"
+        onmouseout="${p.featured?'':'this.style.background=\'transparent\''}">${p.cta}</a>
+    </div>
+  </div>`;
+});
+
+// ── RENDER TEAM ──
+const tgrid = document.getElementById('teamGrid');
+const linkedinSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>`;
+const githubSvg  = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>`;
+TEAM.forEach((m,i) => {
+  tgrid.innerHTML += `
+  <div class="col-sm-6 col-lg-3 reveal" style="transition-delay:${i*0.1}s;">
+    <div class="text-center p-4 rounded-4 h-100" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;"
+      onmouseover="this.style.transform='translateY(-8px)';this.style.boxShadow='0 20px 40px rgba(37,99,235,0.15)';this.style.borderColor='rgba(37,99,235,0.3)';"
+      onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none';this.style.borderColor='rgba(255,255,255,0.08)';">
+      <div class="d-flex align-items-center justify-content-center rounded-circle mx-auto mb-3 fw-bold" style="width:80px;height:80px;background:${m.gradient};color:#fff;font-size:24px;box-shadow:0 0 25px rgba(37,99,235,0.3);">${m.initials}</div>
+      <h5 class="fw-bold mb-1" style="color:#fff;font-size:16px;">${m.name}</h5>
+      <div class="mb-2" style="color:#06b6d4;font-size:13px;font-weight:600;">${m.role}</div>
+      <p style="color:rgba(255,255,255,0.5);font-size:13px;line-height:1.6;margin-bottom:20px;">${m.bio}</p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="#" style="color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">${linkedinSvg}</a>
+        <a href="#" style="color:rgba(255,255,255,0.4);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">${githubSvg}</a>
+      </div>
+    </div>
+  </div>`;
+});
+
+// ── RENDER FAQ ──
+const faqList = document.getElementById('faqList');
+FAQS.forEach((f,i) => {
+  const item = document.createElement('div');
+  item.className = 'faq-item reveal';
+  item.style.transitionDelay = `${i*0.07}s`;
+  item.innerHTML = `
+    <button class="faq-btn">
+      <span>${f.q}</span>
+      <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">${f.a}</div>`;
+  item.querySelector('.faq-btn').addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+  faqList.appendChild(item);
+});
+
+// ── SCROLL REVEAL ──
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const ro = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => ro.observe(el));
+
+// ── COUNTER ANIMATION ──
+const counterEls = document.querySelectorAll('[data-countup]');
+const co = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const target = +el.dataset.countup;
+      const suffix = el.dataset.suffix || '';
+      const duration = 2000;
+      const step = target / (duration / 16);
+      let cur = 0;
+      const timer = setInterval(() => {
+        cur += step;
+        if (cur >= target) { el.textContent = target + suffix; clearInterval(timer); }
+        else { el.textContent = Math.floor(cur) + suffix; }
+      }, 16);
+      co.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+counterEls.forEach(el => co.observe(el));
+
+// ── CONTACT FORM ──
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  let ok = true;
+  const name = document.getElementById('fName').value.trim();
+  const email = document.getElementById('fEmail').value.trim();
+  const subject = document.getElementById('fSubject').value.trim();
+  const message = document.getElementById('fMessage').value.trim();
+  document.getElementById('errName').textContent    = name.length < 2    ? 'Name must be at least 2 characters' : '';
+  document.getElementById('errEmail').textContent   = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'Please enter a valid email' : '';
+  document.getElementById('errSubject').textContent = subject.length < 4 ? 'Subject is required' : '';
+  document.getElementById('errMessage').textContent = message.length < 20 ? 'Message must be at least 20 characters' : '';
+  if (document.getElementById('errName').textContent || document.getElementById('errEmail').textContent ||
+      document.getElementById('errSubject').textContent || document.getElementById('errMessage').textContent) return;
+  const btn = document.getElementById('submitBtn');
+  btn.style.opacity = '0.6'; btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('formSuccess').style.display = 'none';
+      document.getElementById('contactForm').style.display = '';
+      btn.style.opacity = '1'; btn.disabled = false;
+    }, 4000);
+  }, 1200);
+});
+
+// ── NEWSLETTER FORM ──
+document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const val = document.getElementById('newsletterEmail').value.trim();
+  if (!val) return;
+  document.getElementById('newsletterForm').style.display = 'none';
+  document.getElementById('newsletterSuccess').style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('newsletterSuccess').style.display = 'none';
+    document.getElementById('newsletterForm').style.display = '';
+    document.getElementById('newsletterEmail').value = '';
+  }, 3000);
+});
+</script>
+</body>
+</html>
